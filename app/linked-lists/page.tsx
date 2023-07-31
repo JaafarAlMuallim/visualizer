@@ -1,377 +1,100 @@
 "use client";
-import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 import LinkedList from "../components/LinkedList";
-import {
-  ADD_AFTER,
-  ADD_BEFORE,
-  ADD_HEAD,
-  ADD_TAIL,
-  DELETE_ELEMENT,
-  DELETE_HEAD,
-  DELETE_TAIL,
-} from "@/utils/linkedLists-explaination";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import CustomDropdown from "../components/CustomDropdown";
+import CustomPopover from "../components/CustomPopover";
+import CustomSwitch from "../components/CustomSwitch";
+import addAfter from "@/utils/addAfter";
+import addHead from "@/utils/addHead";
+import addBefore from "@/utils/addBefore";
+import addTail from "@/utils/addTail";
+import deleteHead from "@/utils/deleteHead";
+import deleteTail from "@/utils/deleteTail";
+import deleteElement from "@/utils/deleteElement";
 
 // TODO add framer motion
 export default function LinkedListPage() {
   const [list, setList] = useState<number[]>([]);
   const [type, setType] = useState<"singly" | "doubly">("singly");
-  const { toast } = useToast();
   const [currentState, setCurrentState] = useState("Add To Head");
   const [value, setValue] = useState("");
   const [beforeAfter, setBeforeAfter] = useState("");
-  const errorStyle = "bg-red-700 text-white border-2 border-red-700";
-  const successStyle = "bg-green-700 text-white border-2 border-green-700";
 
   const SpecialOps = ["Add Before", "Add After"];
   const deleteions = ["Delete From Head", "Delete From Tail"];
-  const explaination = () => {
-    switch (currentState) {
-      case "Add To Head":
-        return ADD_HEAD.split("\n").map((line) => <p key={line}>{line}</p>);
-      case "Add Before":
-        return ADD_BEFORE.split("\n").map((line) => <p key={line}>{line}</p>);
-      case "Add After":
-        return ADD_AFTER.split("\n").map((line) => <p key={line}>{line}</p>);
-      case "Add To Tail":
-        return ADD_TAIL.split("\n").map((line) => <p key={line}>{line}</p>);
-      case "Delete From Head":
-        return DELETE_HEAD.split("\n").map((line) => <p key={line}>{line}</p>);
-      case "Delete From Tail":
-        return DELETE_TAIL.split("\n").map((line) => <p key={line}>{line}</p>);
-      case "Delete Element":
-        return DELETE_ELEMENT.split("\n").map((line) => (
-          <p key={line}>{line}</p>
-        ));
-    }
-  };
-
   const handler = () => {
     switch (currentState) {
       case "Add To Head":
-        if (list.includes(Number(value))) {
-          toast({
-            title: "Error",
-            description: "Element already exists",
-            duration: 3000,
-            className: errorStyle,
-          });
-          setValue("");
-          return;
-        }
-        addHead();
+        addHead({
+          value,
+          list,
+          setList,
+          setValue,
+          beforeAfter,
+          setBeforeAfter,
+        });
         break;
       case "Add Before":
-        if (!list.includes(Number(beforeAfter))) {
-          toast({
-            title: "Error",
-            description: "Element not found",
-            duration: 3000,
-            className: errorStyle,
-          });
-          setValue("");
-          setBeforeAfter("");
-          return;
-        }
-        if (list.includes(Number(value))) {
-          toast({
-            title: "Error",
-            description: "Element already exists",
-            duration: 3000,
-            className: errorStyle,
-          });
-          setValue("");
-          setBeforeAfter("");
-          return;
-        }
-        addBefore();
+        addBefore({
+          value,
+          list,
+          setList,
+          setValue,
+          beforeAfter,
+          setBeforeAfter,
+        });
         break;
       case "Add After":
-        if (!list.includes(Number(beforeAfter))) {
-          toast({
-            title: "Error",
-            description: "Element not found",
-            duration: 3000,
-            className: errorStyle,
-          });
-          setValue("");
-          setBeforeAfter("");
-          return;
-        }
-        if (list.includes(Number(value))) {
-          toast({
-            title: "Error",
-            description: "Element already exists",
-            duration: 3000,
-            className: errorStyle,
-          });
-          setValue("");
-          setBeforeAfter("");
-          return;
-        }
-        addAfter();
+        addAfter({
+          value,
+          beforeAfter,
+          setValue,
+          setBeforeAfter,
+          list,
+          setList,
+        });
         break;
       case "Add To Tail":
-        if (list.includes(Number(value))) {
-          toast({
-            title: "Error",
-            description: "Element already exists",
-            duration: 3000,
-            className: errorStyle,
-          });
-          setValue("");
-          return;
-        }
-        addTail();
+        addTail({
+          value,
+          beforeAfter,
+          setValue,
+          setBeforeAfter,
+          list,
+          setList,
+        });
         break;
       case "Delete From Head":
-        deleteHead();
+        deleteHead({
+          value,
+          beforeAfter,
+          setValue,
+          setBeforeAfter,
+          list,
+          setList,
+        });
         break;
       case "Delete From Tail":
-        deleteTail();
+        deleteTail({
+          value,
+          beforeAfter,
+          setValue,
+          setBeforeAfter,
+          list,
+          setList,
+        });
         break;
       case "Delete Element":
-        deleteElement();
+        deleteElement({
+          value,
+          beforeAfter,
+          setValue,
+          setBeforeAfter,
+          list,
+          setList,
+        });
         break;
     }
-  };
-  const addHead = () => {
-    if (value === "") {
-      toast({
-        title: "Error",
-        description: "Please enter a value",
-        duration: 3000,
-        className: errorStyle,
-      });
-      return;
-    }
-    setList([Number(value), ...list]);
-    toast({
-      title: "Success",
-      description: "Added to head",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    return;
-  };
-  const addBefore = () => {
-    if (value === "") {
-      toast({
-        title: "Error",
-        description: "Please enter a value",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      setBeforeAfter("");
-      return;
-    }
-    if (list.length === 0) {
-      toast({
-        title: "Error",
-        description: "List is empty",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      setBeforeAfter("");
-      return;
-    }
-    const index = list.indexOf(Number(beforeAfter));
-    if (index === -1) {
-      toast({
-        title: "Error",
-        description: "Element not found",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      setBeforeAfter("");
-      return;
-    }
-    setList([...list.slice(0, index), Number(value), ...list.slice(index)]);
-    toast({
-      title: "Success",
-      description: "Added before",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    setBeforeAfter("");
-    return;
-  };
-  const addAfter = () => {
-    if (value === "") {
-      toast({
-        title: "Error",
-        description: "Please enter a value",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      setBeforeAfter("");
-      return;
-    }
-    if (list.length === 0) {
-      toast({
-        title: "Error",
-        description: "List is empty",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      setBeforeAfter("");
-      return;
-    }
-    const index = list.indexOf(Number(beforeAfter));
-    if (index === -1) {
-      toast({
-        title: "Error",
-        description: "Element not found",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      setBeforeAfter("");
-      return;
-    }
-    setList((prevList) => [
-      ...prevList.slice(0, index + 1),
-      Number(value),
-      ...prevList.slice(index + 1),
-    ]);
-    toast({
-      title: "Success",
-      description: "Added after",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    setBeforeAfter("");
-    return;
-  };
-
-  const addTail = () => {
-    if (value === "") {
-      toast({
-        title: "Error",
-        description: "Please enter a value",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      return;
-    }
-    setList((prevList) => [...prevList, Number(value)]);
-    toast({
-      title: "Success",
-      description: "Added to tail",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    return;
-  };
-  const deleteHead = () => {
-    if (list.length === 0) {
-      toast({
-        title: "Error",
-        description: "List is empty",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      return;
-    }
-    setList((prevList) => prevList.slice(1));
-    toast({
-      title: "Success",
-      description: "Deleted from head",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    return;
-  };
-  const deleteTail = () => {
-    if (list.length === 0) {
-      toast({
-        title: "Error",
-        description: "List is empty",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      return;
-    }
-    setList((prevList) => prevList.slice(0, prevList.length - 1));
-    toast({
-      title: "Success",
-      description: "Deleted from tail",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    return;
-  };
-  const deleteElement = () => {
-    if (value === "") {
-      toast({
-        title: "Error",
-        description: "Please enter a value",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      return;
-    }
-    if (list.length === 0) {
-      toast({
-        title: "Error",
-        description: "List is empty",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      return;
-    }
-    const index = list.indexOf(Number(value));
-    if (index === -1) {
-      toast({
-        title: "Error",
-        description: "Element not found",
-        duration: 3000,
-        className: errorStyle,
-      });
-      setValue("");
-      return;
-    }
-    setList((prevList) => [
-      ...prevList.slice(0, index),
-      ...prevList.slice(index + 1),
-    ]);
-    toast({
-      title: "Success",
-      description: "Deleted element",
-      duration: 3000,
-      className: successStyle,
-    });
-    setValue("");
-    setBeforeAfter("");
-    return;
   };
 
   const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -419,55 +142,16 @@ export default function LinkedListPage() {
           >
             {currentState.includes("Delete") ? "Delete" : "Add"}
           </button>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
-              {currentState} | Change Operation
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => changeState("Add To Head")}>
-                Add To Head
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeState("Add Before")}>
-                Add Before
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeState("Add After")}>
-                Add After
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeState("Add To Tail")}>
-                Add To Tail
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeState("Delete From Head")}>
-                Delete From Head
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeState("Delete From Tail")}>
-                Delete From Tail
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeState("Delete Element")}>
-                Delete Element
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Popover>
-            <PopoverTrigger className="bg-blue-700 mx-5 hover:bg-blue-900 text-white py-2 px-4 rounded-lg">
-              Explaination
-            </PopoverTrigger>
-            <PopoverContent>
-              <p>{explaination()}</p>
-            </PopoverContent>
-          </Popover>
+          <CustomDropdown
+            changeState={changeState}
+            currentState={currentState}
+          />
+          <CustomPopover state={currentState} />
         </div>
-        <label
-          htmlFor="list-type"
-          className="text-slate-300 text-sm hover:bg-slate-700 whitespace-nowrap"
-        >
-          Doubly Linked List
-        </label>
-        <Switch
-          id="list-type"
-          className="mx-10"
-          onClick={() => {
-            setType(type === "singly" ? "doubly" : "singly");
-          }}
+        <CustomSwitch
+          setType={setType}
+          struct={"Doubly Linked List"}
+          currentType={type}
         />
       </div>
 
