@@ -32,15 +32,24 @@ export default function LinkedList({
                 </>
               );
             })}
-        {type === "singly" ? (
-          <Arrow direction="right" />
-        ) : (
-          <div>
-            {<Arrow direction="right" />}
-            {<Arrow direction="left" />}
-          </div>
-        )}
-        <Box number={"null"} />
+        {list.length !== 0 ? (
+          type === "singly" ? (
+            <>
+              <Arrow direction="right" />
+              <Box number={"null"} />
+            </>
+          ) : (
+            <>
+              (
+              <div>
+                {<Arrow direction="right" />}
+                {<Arrow direction="left" />}
+              </div>
+              )
+              <Box number={"null"} />
+            </>
+          )
+        ) : null}
       </div>
     </div>
   );
