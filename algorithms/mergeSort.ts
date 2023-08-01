@@ -29,7 +29,7 @@ const merge = (
   }
 };
 
-export const getMergeSortAnims = (
+export const getMergeSortAnimations = (
   items: number[],
   helper: number[],
   animationArr: number[][],
@@ -40,7 +40,7 @@ export const getMergeSortAnims = (
 
   const mid = low + Math.floor((high - low) / 2);
 
-  getMergeSortAnims(items, helper, animationArr, low, mid);
-  getMergeSortAnims(items, helper, animationArr, mid + 1, high);
+  getMergeSortAnimations(items, helper, animationArr, low, mid);
+  getMergeSortAnimations(items, helper, animationArr, mid + 1, high);
   merge(items, helper, animationArr, low, mid, high);
 };

@@ -21,14 +21,14 @@ export const animateMerge: AnimateFunc = ({
     if (!div) return;
     setTimeout(() => {
       div.style.backgroundColor = "#b041f0";
-      div.style.height = `${newHeight / 7}%`;
+      div.style.height = `${newHeight / 4}%`;
       setTimeout(() => {
         div.style.backgroundColor = "#482";
         if (idx === arr.length - 1) {
           setItems(newArr);
         }
-      }, settings.delay * 2);
-    }, settings.delay * idx * 2);
+      }, settings.delay * 3);
+    }, settings.delay * idx * 3);
   });
 };
 
@@ -54,7 +54,7 @@ export const animateDivs: AnimateFunc = ({
         if (idx === arr.length - 1) {
           setItems(newArr);
         }
-      }, settings.delay * 2);
-    }, settings.delay * idx * 2);
+      }, settings.delay * 3);
+    }, settings.delay * idx * 3);
   });
 };

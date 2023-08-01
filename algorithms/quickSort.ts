@@ -15,11 +15,11 @@ const split = (
   let lowest = low;
   let index = low;
   let highest = high;
-  const v = arr[low];
+  const value = arr[low];
 
   while (index <= highest) {
-    if (arr[index] < v) exch(arr, animArr, index++, lowest++);
-    else if (arr[index] > v) exch(arr, animArr, index, highest--);
+    if (arr[index] < value) exchange(arr, animArr, index++, lowest++);
+    else if (arr[index] > value) exchange(arr, animArr, index, highest--);
     else index++;
   }
 
@@ -27,7 +27,7 @@ const split = (
   split(arr, animArr, highest + 1, high);
 };
 
-const exch = (arr: number[], animArr: number[][], a: number, b: number) => {
+const exchange = (arr: number[], animArr: number[][], a: number, b: number) => {
   animArr.push([a, b]);
   const tmp = arr[a];
   arr[a] = arr[b];
