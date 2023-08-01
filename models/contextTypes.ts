@@ -15,5 +15,5 @@ export interface ISettingsContext {
 export const initialValue: Settings = {
   type: "insertion",
   arrLength: 40,
-  delay: 3,
+  delay: 5,
 };

@@ -4,6 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Algo } from "@/models/contextTypes";
 import { Dispatch, SetStateAction } from "react";
 
 export default function SortDropdown({
@@ -11,7 +12,7 @@ export default function SortDropdown({
   changeState,
 }: {
   currentState: string;
-  changeState: Dispatch<SetStateAction<string>>;
+  changeState(type: Algo): void;
 }) {
   return (
     <DropdownMenu>

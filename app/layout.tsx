@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
+import Provider from "@/store/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className}  bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900`}
-      >
+      <body className={`${inter.className}`}>
         <Navbar />
-        {children}
+        <main className="grid grid-rows-[repeat(10,_1fr)   bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 w-screen h-full">
+          <Provider>{children}</Provider>
+        </main>
         <Toaster />
       </body>
     </html>
