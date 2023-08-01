@@ -11,6 +11,12 @@ import addTail from "@/utils/addTail";
 import deleteHead from "@/utils/deleteHead";
 import deleteTail from "@/utils/deleteTail";
 import deleteElement from "@/utils/deleteElement";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Switch } from "@/components/ui/switch";
 
 // TODO add framer motion
 export default function LinkedListPage() {
@@ -148,11 +154,36 @@ export default function LinkedListPage() {
           />
           <CustomPopover state={currentState} />
         </div>
-        <CustomSwitch
-          setType={setType}
-          struct={"Doubly Linked List"}
-          currentType={type}
-        />
+        <Popover>
+          <PopoverTrigger
+            aria-controls="trigger"
+            className="bg-blue-700 mx-5 hover:bg-blue-900 text-white py-2 px-4 rounded-lg"
+          >
+            Settings
+          </PopoverTrigger>
+          <PopoverContent className="bg-slate-800">
+            <CustomSwitch
+              setType={setType}
+              struct={"Doubly Linked List"}
+              currentType={type}
+            />
+            <>
+              <label
+                htmlFor="list-type"
+                className="text-slate-300 text-sm hover:bg-slate-700 whitespace-nowrap"
+              >
+                Reverse Linked List
+              </label>
+              <Switch
+                id="list-type"
+                className="mx-9"
+                onClick={() => {
+                  setList((prevList) => [...prevList].reverse());
+                }}
+              />
+            </>
+          </PopoverContent>
+        </Popover>
       </div>
 
       <div className="flex flex-col items-center justify-center flex-1 px-20 text-center">

@@ -37,7 +37,10 @@ export default function CustomPopover({ state }: { state: string }) {
 
   return (
     <Popover>
-      <PopoverTrigger className="bg-blue-700 mx-5 hover:bg-blue-900 text-white py-2 px-4 rounded-lg">
+      <PopoverTrigger
+        aria-controls="trigger"
+        className="bg-blue-700 mx-5 hover:bg-blue-900 text-white py-2 px-4 rounded-lg"
+      >
         Explaination
       </PopoverTrigger>
       <PopoverContent>

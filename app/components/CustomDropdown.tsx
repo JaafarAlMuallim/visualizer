@@ -4,6 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Dispatch, SetStateAction } from "react";
 
 export default function CustomDropdown({
   changeState,
@@ -14,7 +15,10 @@ export default function CustomDropdown({
 }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+      <DropdownMenuTrigger
+        id="trigger"
+        className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+      >
         {currentState} | Change Operation
       </DropdownMenuTrigger>
       <DropdownMenuContent>
