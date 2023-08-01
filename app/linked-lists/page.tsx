@@ -28,6 +28,10 @@ export default function LinkedListPage() {
 
   const SpecialOps = ["Add Before", "Add After"];
   const deleteions = ["Delete From Head", "Delete From Tail"];
+
+  const clearList = () => {
+    setList((prevList) => []);
+  };
   const handler = () => {
     switch (currentState) {
       case "Add To Head":
@@ -127,6 +131,7 @@ export default function LinkedListPage() {
                 placeholder="New value"
                 onChange={changeValue}
                 value={value}
+                autoFocus
               />
               {SpecialOps.includes(currentState) && (
                 <input
@@ -142,8 +147,9 @@ export default function LinkedListPage() {
             </>
           ) : null}
           <button
+            disabled={value === ""}
             type="button"
-            className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+            className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
             onClick={handler}
           >
             {currentState.includes("Delete") ? "Delete" : "Add"}
@@ -175,6 +181,7 @@ export default function LinkedListPage() {
                 Reverse Linked List
               </label>
               <Switch
+                disabled={list.length === 0}
                 id="list-type"
                 className="mx-9"
                 onClick={() => {
@@ -184,6 +191,14 @@ export default function LinkedListPage() {
             </>
           </PopoverContent>
         </Popover>
+        <button
+          type="button"
+          hidden={list.length === 0}
+          className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+          onClick={clearList}
+        >
+          Clear List
+        </button>
       </div>
 
       <div className="flex flex-col items-center justify-center flex-1 px-20 text-center">
