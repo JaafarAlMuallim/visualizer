@@ -6,7 +6,8 @@ import { itemsContext, settingsContext } from "./contexts";
 import { insertionSortAnimations } from "@/algorithms/insertionSort";
 import { animateDivs, animateMerge } from "@/algorithms/animate";
 import { quickSortAnimations } from "@/algorithms/quickSort";
-import { getMergeSortAnimations } from "@/algorithms/mergeSort";
+import { mergeSortAnimations } from "@/algorithms/mergeSort";
+import { bubbleSortAnimations } from "@/algorithms/bubbleSort";
 
 const Provider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<Settings>(initialValue);
@@ -30,7 +31,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
         const mergeAnim: number[] = [];
         const mergeArr: number[][] = [];
         const mergeNums = [...items];
-        getMergeSortAnimations(
+        mergeSortAnimations(
           mergeNums,
           mergeAnim,
           mergeArr,
@@ -40,11 +41,15 @@ const Provider = ({ children }: { children: ReactNode }) => {
         animateMerge({ newArr: mergeNums, arr: mergeArr, setItems, settings });
         break;
       case "bubble":
-        const bubbleAux: number[] = [];
-        const bubbleArr: number[][] = [];
-        const bubbleNums = [...items];
-        // // getMergeSortAnims(bubbleNums, bubbleAux, bubbleArr, 0, items.length - 1);
-        // animateMerge({ newArr: nums, arr, setItems, settings });
+        const { newArr: bubbleNums, animationArr: bubbleAnims } =
+          bubbleSortAnimations(items);
+        console.log(bubbleNums, bubbleAnims);
+        animateDivs({
+          newArr: bubbleNums,
+          arr: bubbleAnims,
+          setItems,
+          settings,
+        });
         break;
       case "quick":
         const { quickSorted, quickSortAnims } = quickSortAnimations(items);
