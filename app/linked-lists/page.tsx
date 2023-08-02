@@ -147,7 +147,6 @@ export default function LinkedListPage() {
             </>
           ) : null}
           <button
-            disabled={value === ""}
             type="button"
             className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
             onClick={handler}
@@ -185,7 +184,7 @@ export default function LinkedListPage() {
                 id="list-type"
                 className="mx-9"
                 onClick={() => {
-                  setList((prevList) => [...prevList].reverse());
+                  setList((prevList) => [...[...prevList].reverse()]);
                 }}
               />
             </>

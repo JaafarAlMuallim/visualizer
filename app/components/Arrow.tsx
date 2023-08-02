@@ -3,16 +3,14 @@ export default function Arrow(props: {
   className?: string;
 }) {
   const degree = {
-    right: 90,
-    left: 90,
-    up: 0,
-    down: 180,
+    right: "rotate-90",
+    left: "-rotate-90",
+    up: "rotate-0",
+    down: "rotate-180",
   }[props.direction];
   return (
     <svg
-      className={`h-14 w-14 text-white ${`${
-        props.direction === "left" ? "-" : ""
-      }rotate-${degree}`} ${props.className}`}
+      className={`h-14 w-14 text-white ${degree} ${props.className} `}
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
