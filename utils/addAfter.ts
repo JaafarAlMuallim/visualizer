@@ -1,5 +1,5 @@
-import { toast } from "@/components/ui/use-toast";
 import LinkedListProps from "@/models/linkedListProps";
+import customToast from "./toasts";
 
 const addAfter = ({
   value,
@@ -10,46 +10,26 @@ const addAfter = ({
   setList,
 }: LinkedListProps) => {
   if (value === "") {
-    toast({
-      title: "Error",
-      description: "Please enter a value",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("Please Enter a Value", "error");
     setValue("");
     setBeforeAfter("");
     return;
   }
   if (list.length === 0) {
-    toast({
-      title: "Error",
-      description: "List is empty",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("List is Empty", "error");
     setValue("");
     setBeforeAfter("");
     return;
   }
   if (list.includes(Number(value))) {
-    toast({
-      title: "Error",
-      description: "Element already exists",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast(`Element With Value ${value} Already Exists`, "error");
     setValue("");
     setBeforeAfter("");
     return;
   }
   const index = list.indexOf(Number(beforeAfter));
   if (index === -1) {
-    toast({
-      title: "Error",
-      description: "Element not found",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast(`Element With Value ${beforeAfter} Not Found`, "error");
     setValue("");
     setBeforeAfter("");
     return;
@@ -60,12 +40,10 @@ const addAfter = ({
     Number(value),
     ...prevList.slice(index + 1),
   ]);
-  toast({
-    title: "Success",
-    description: "Added after",
-    duration: 1000,
-    className: "bg-green-700 text-white border-2 border-green-700",
-  });
+  customToast(
+    `Added Element With Value ${value} After ${beforeAfter}`,
+    "success"
+  );
   setValue("");
   setBeforeAfter("");
   return;

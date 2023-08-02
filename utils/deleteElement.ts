@@ -1,5 +1,6 @@
 import { toast } from "@/components/ui/use-toast";
 import LinkedListProps from "@/models/linkedListProps";
+import customToast from "./toasts";
 
 const deleteElement = ({
   value,
@@ -9,33 +10,18 @@ const deleteElement = ({
   setBeforeAfter,
 }: LinkedListProps) => {
   if (value === "") {
-    toast({
-      title: "Error",
-      description: "Please enter a value",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("Pleaes Enter a Value", "error");
     setValue("");
     return;
   }
   if (list.length === 0) {
-    toast({
-      title: "Error",
-      description: "List is empty",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("List is Empty", "error");
     setValue("");
     return;
   }
   const index = list.indexOf(Number(value));
   if (index === -1) {
-    toast({
-      title: "Error",
-      description: "Element not found",
-      duration: 1000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast(`Element With Value ${value} Not Found`, "error");
     setValue("");
     return;
   }
@@ -43,12 +29,10 @@ const deleteElement = ({
     ...prevList.slice(0, index),
     ...prevList.slice(index + 1),
   ]);
-  toast({
-    title: "Success",
-    description: "Deleted element",
-    duration: 1000,
-    className: "bg-green-700 text-white border-2 border-green-700",
-  });
+  customToast(
+    `Deleted Element at Index ${index} with value ${value}`,
+    "success"
+  );
   setValue("");
   setBeforeAfter("");
   return;
