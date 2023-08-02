@@ -27,8 +27,8 @@ export const animateMerge: AnimateFunc = ({
         if (idx === arr.length - 1) {
           setItems(newArr);
         }
-      }, settings.delay * 3);
-    }, settings.delay * idx * 3);
+      }, settings.delay * 6);
+    }, settings.delay * idx * 6);
   });
 };
 
@@ -45,16 +45,20 @@ export const animateDivs: AnimateFunc = ({
     setTimeout(() => {
       div.style.backgroundColor = "#b041f0";
       div2.style.backgroundColor = "#b041f0";
+      // div2.style.border = "#731ea0";
+      // div.style.border = "#731ea0";
       const divHeight = div.style.height;
       div.style.height = div2.style.height;
       div2.style.height = divHeight;
       setTimeout(() => {
         div.style.backgroundColor = "#482";
         div2.style.backgroundColor = "#482";
+        // div2.style.border = "rgb(20 83 45)";
+        // div.style.border = "rgb(20 83 45)";
         if (idx === arr.length - 1) {
           setItems(newArr);
         }
-      }, settings.delay * 3);
-    }, settings.delay * idx * 3);
+      }, settings.delay * 6);
+    }, settings.delay * idx * 6);
   });
 };

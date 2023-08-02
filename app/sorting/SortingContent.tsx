@@ -10,7 +10,7 @@ export default function SortingContent() {
         {items.map((item, idx) => (
           <div
             key={`${item}-${settings.arrLength}-${idx}`}
-            className="flex-1"
+            className="flex-1 border border-green-900"
             style={{
               backgroundColor: "#482",
               height: `${item / 4}%`,
