@@ -1,5 +1,4 @@
 import { toast } from "@/components/ui/use-toast";
-import { errorStyle, successStyle } from "./constants";
 import LinkedListProps from "@/models/linkedListProps";
 
 const addBefore = ({
@@ -15,7 +14,7 @@ const addBefore = ({
       title: "Error",
       description: "Please enter a value",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     setValue("");
     setBeforeAfter("");
@@ -26,7 +25,7 @@ const addBefore = ({
       title: "Error",
       description: "List is empty",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     setValue("");
     setBeforeAfter("");
@@ -37,7 +36,7 @@ const addBefore = ({
       title: "Error",
       description: "Element already exists",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     setValue("");
     setBeforeAfter("");
@@ -49,7 +48,7 @@ const addBefore = ({
       title: "Error",
       description: "Element not found",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     setValue("");
     setBeforeAfter("");
@@ -64,7 +63,7 @@ const addBefore = ({
     title: "Success",
     description: "Added before",
     duration: 1000,
-    className: successStyle,
+    className: "bg-green-700 text-white border-2 border-green-700",
   });
   setValue("");
   setBeforeAfter("");

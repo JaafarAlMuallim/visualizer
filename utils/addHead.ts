@@ -1,6 +1,5 @@
 import { toast } from "@/components/ui/use-toast";
 import LinkedListProps from "@/models/linkedListProps";
-import { errorStyle, successStyle } from "./constants";
 
 const addHead = ({ value, setList, setValue, list }: LinkedListProps) => {
   if (value === "") {
@@ -8,7 +7,7 @@ const addHead = ({ value, setList, setValue, list }: LinkedListProps) => {
       title: "Error",
       description: "Please enter a value",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     return;
   }
@@ -17,7 +16,7 @@ const addHead = ({ value, setList, setValue, list }: LinkedListProps) => {
       title: "Error",
       description: "Element already exists",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     setValue("");
     return;
@@ -27,7 +26,7 @@ const addHead = ({ value, setList, setValue, list }: LinkedListProps) => {
     title: "Success",
     description: "Added to head",
     duration: 1000,
-    className: successStyle,
+    className: "bg-green-700 text-white border-2 border-green-700",
   });
   setValue("");
   return;

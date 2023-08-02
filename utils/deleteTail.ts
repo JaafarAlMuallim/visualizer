@@ -1,6 +1,5 @@
 import { toast } from "@/components/ui/use-toast";
 import LinkedListProps from "@/models/linkedListProps";
-import { errorStyle, successStyle } from "./constants";
 
 const deleteTail = ({ list, setValue, setList }: LinkedListProps) => {
   if (list.length === 0) {
@@ -8,7 +7,7 @@ const deleteTail = ({ list, setValue, setList }: LinkedListProps) => {
       title: "Error",
       description: "List is empty",
       duration: 1000,
-      className: errorStyle,
+      className: "bg-red-700 text-white border-2 border-red-700",
     });
     setValue("");
     return;
@@ -18,7 +17,7 @@ const deleteTail = ({ list, setValue, setList }: LinkedListProps) => {
     title: "Success",
     description: "Deleted from tail",
     duration: 1000,
-    className: successStyle,
+    className: "bg-green-700 text-white border-2 border-green-700",
   });
   setValue("");
   return;
