@@ -8,12 +8,18 @@ import dequeue from "@/utils/deqQ";
 import customToast from "@/utils/toasts";
 import StackQueue from "./StackQueue";
 import StructureNode from "@/models/Node";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { evaluatePostfix, isValidPostfixStack } from "@/utils/postfixUtils";
 
 export default function StackAndQueuePage() {
   const [list, setList] = useState<StructureNode[]>([]);
   const [type, setType] = useState<"stack" | "queue">("stack");
   const [value, setValue] = useState("");
-  const [evaluated, setEvaluated] = useState<[boolean, number]>([false, 0]);
+  const [show, setShow] = useState(false);
 
   const clearList = () => {
     setList((prevList) => []);
@@ -39,18 +45,20 @@ export default function StackAndQueuePage() {
     switch (type) {
       case "stack":
         popStack({ list, setList });
-        setEvaluated(isValidPostfixStack(list));
         return;
       case "queue":
         dequeue({ list, setList });
         break;
     }
   };
+  const showValue = () => {
+    setShow((prevShow) => !prevShow);
+  };
+
   const insertionHandler = () => {
     switch (type) {
       case "stack":
         pushStack({ value, setList, setValue });
-        setEvaluated(isValidPostfixStack(list));
         return;
       case "queue":
         enqueue({ value, setList, setValue });
@@ -60,7 +68,7 @@ export default function StackAndQueuePage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <div className="px-4 py-2 flex items-center">
-        <div className="flex md:flex-row items-center justify-center mx-20">
+        <div className="flex md:flex-row items-center justify-center mx-20 my-5">
           <>
             <input
               type="text"
@@ -71,42 +79,36 @@ export default function StackAndQueuePage() {
               autoFocus
             />
           </>
-          <button
-            disabled={value === ""}
-            type="button"
-            className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
-            onClick={insertionHandler}
-          >
-            Insert
-          </button>
-          <button
-            disabled={list.length === 0}
-            type="button"
-            className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
-            onClick={deletionHandler}
-          >
-            Delete
-          </button>
-          {type === "stack" && (
+          <div>
+            <button
+              disabled={value === ""}
+              type="button"
+              className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+              onClick={insertionHandler}
+            >
+              Insert
+            </button>
+            <button
+              disabled={list.length === 0}
+              type="button"
+              className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+              onClick={deletionHandler}
+            >
+              Delete
+            </button>
             <button
               disabled={true}
               type="button"
-              className="bg-transparent mx-5 text-white py-2 px-4 rounded-lg"
-              onClick={deletionHandler}
+              className={`bg-blue-600 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg ${
+                show ? "" : "invisible"
+              }`}
             >
-              Postfix value = {evaluated[1]}
+              {isValidPostfixStack(list)
+                ? `Postfix = ${evaluatePostfix(list)}`
+                : "Invalid Postfix"}
             </button>
-          )}
+          </div>
         </div>
-        <>
-          <label
-            htmlFor="list-type"
-            className="text-slate-300 text-sm hover:bg-slate-700 whitespace-nowrap"
-          >
-            {type === "stack" ? "Stack" : "Queue"}
-          </label>
-          <Switch id="list-type" className="mx-9" onClick={changeType} />
-        </>
         <button
           type="button"
           disabled={list.length === 0}
@@ -115,60 +117,50 @@ export default function StackAndQueuePage() {
         >
           Clear {type === "stack" ? "Stack" : "Queue"}
         </button>
+        <Popover>
+          <PopoverTrigger
+            aria-controls="trigger"
+            className="bg-blue-700 mx-5 hover:bg-blue-900 text-white py-2 px-4 rounded-lg"
+          >
+            Settings
+          </PopoverTrigger>
+          <PopoverContent className="bg-slate-800">
+            <label
+              htmlFor="list-type"
+              className="text-slate-300 text-sm hover:bg-slate-700 whitespace-nowrap"
+            >
+              Stack
+            </label>
+            <Switch
+              id="list-type"
+              className="my-2 mx-20"
+              onClick={changeType}
+              checked={type === "stack"}
+            />
+            {type === "stack" && (
+              <>
+                <label
+                  htmlFor="list-type"
+                  className="text-slate-300 text-sm hover:bg-slate-700 whitespace-nowrap"
+                >
+                  Show Postfix
+                </label>
+                <Switch
+                  id="list-type"
+                  className="mx-8"
+                  onClick={showValue}
+                  checked={show}
+                />
+              </>
+            )}
+          </PopoverContent>
+        </Popover>
       </div>
-
       <div className="flex flex-col items-center justify-center flex-1 px-20 text-center">
         <div className="flex flex-row items-center justify-center">
-          <StackQueue
-            type={type}
-            list={type === "stack" ? list.reverse() : list}
-          />
+          <StackQueue type={type} list={list} />
         </div>
       </div>
     </div>
   );
 }
-
-function isValidPostfixStack(expr: StructureNode[]): [boolean, number] {
-  const operators = new Set(["+", "-", "/", "*"]);
-  const stack: number[] = [];
-  if (expr.length === 0) {
-    console.log("Empty expression");
-    return [false, 0];
-  }
-  for (const item of expr.reverse()) {
-    if (typeof item.value === "number") {
-      stack.push(item.value);
-    } else if (typeof item.value === "string" && operators.has(item.value)) {
-      if (stack.length < 2) {
-        return [false, 0]; // Invalid expression
-      }
-
-      const num1 = stack.pop();
-      const num2 = stack.pop();
-      switch (item.value) {
-        case "+":
-          stack.push(num1! + num2!);
-          break;
-        case "-":
-          stack.push(num1! - num2!);
-          break;
-        case "*":
-          stack.push(num1! * num2!);
-          break;
-        case "/":
-          stack.push(num1! / num2!);
-          break;
-        default:
-          return [false, 0]; // Invalid operator
-      }
-    } else {
-      return [false, 0]; // Invalid element
-    }
-  }
-
-  return [true, stack[0]]; // True if the stack has exactly one element (the result of the expression)
-}
-
-// Example usage:
-// const expression = [2, 3, 4, '*', '+', 5, '-']; // This is a valid postfix expression: (2 + (3 * 4)) - 5 true
