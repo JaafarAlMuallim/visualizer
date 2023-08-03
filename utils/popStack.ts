@@ -1,8 +1,9 @@
 import { toast } from "@/components/ui/use-toast";
+import StructureNode from "@/models/Node";
 
 type props = {
-  list: (number | string)[];
-  setList: React.Dispatch<React.SetStateAction<(number | string)[]>>;
+  list: StructureNode[];
+  setList: React.Dispatch<React.SetStateAction<StructureNode[]>>;
 };
 
 export default function popStack({ list, setList }: props) {

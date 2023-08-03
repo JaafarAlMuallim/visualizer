@@ -1,12 +1,12 @@
 import { toast } from "@/components/ui/use-toast";
-
+import StructureNode from "@/models/Node";
+import { v4 as uuidv4 } from "uuid";
 type props = {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  setList: React.Dispatch<React.SetStateAction<(number | string)[]>>;
+  setList: React.Dispatch<React.SetStateAction<StructureNode[]>>;
 };
 export default function enqueue({ value, setList, setValue }: props) {
-  console.log("ENQUEUING");
   if (value === "") {
     toast({
       title: "Error",
@@ -16,7 +16,11 @@ export default function enqueue({ value, setList, setValue }: props) {
     });
   }
   if (typeof parseInt(value) === "number" && !isNaN(parseInt(value))) {
-    setList((prevList) => [...prevList, parseInt(value)]);
+    const node: StructureNode = {
+      value: parseInt(value),
+      id: uuidv4(),
+    };
+    setList((prevList) => [...prevList, node]);
     toast({
       title: "Success",
       description: "Value Added To Queue",

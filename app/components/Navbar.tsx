@@ -1,11 +1,15 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { twMerge } from "tailwind-merge";
 
 export default function Navbar() {
+  const pathname = usePathname();
   return (
     <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-blue-700 via-purple-800 to-pink-900 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -17,28 +21,42 @@ export default function Navbar() {
         <div className="flex space-x-4">
           <Link
             href="/sorting"
-            className=" text-slate-300 hover:bg-slate-600 px-3 py-2 rounded-md text-sm font-medium"
+            className={twMerge(
+              `text-gray-400 hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === "/sorting" ? "text-white" : ""
+              }`
+            )}
           >
             Sorting
           </Link>
           <Link
             href="/stacks-queues"
-            className="text-slate-300 hover:bg-slate-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className={twMerge(
+              `text-gray-400 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === "/stacks-queues" ? "text-white" : ""
+              }`
+            )}
           >
             Stacks & Queues
           </Link>
           <Link
             href="/linked-lists"
-            className="text-slate-300 hover:bg-slate-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className={twMerge(
+              `text-gray-400 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === "/linked-lists" ? "text-white" : ""
+              }`
+            )}
           >
             Linked Lists
           </Link>
-          <Link
+          {/* <Link
             href="/trees"
-            className="text-slate-300 hover:bg-slate-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className={`text-slate-300 hover:bg-slate-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+              selected ? "text-blue-400" : ""
+            }`}
           >
             Trees
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="">
