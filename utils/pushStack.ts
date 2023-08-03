@@ -1,6 +1,6 @@
-import { toast } from "@/components/ui/use-toast";
 import StructureNode from "@/models/Node";
 import { v4 as uuidv4 } from "uuid";
+import customToast from "./toasts";
 type props = {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -9,12 +9,7 @@ type props = {
 const operators = ["+", "-", "/", "*"];
 export default function pushStack({ value, setList, setValue }: props) {
   if (value === "") {
-    toast({
-      title: "Error",
-      description: "Please Enter a Value",
-      duration: 2000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("Please Enter a Value", "error");
     return;
   }
   if (typeof parseInt(value) === "number" && !isNaN(parseInt(value))) {
@@ -23,12 +18,7 @@ export default function pushStack({ value, setList, setValue }: props) {
       id: uuidv4(),
     };
     setList((prevList) => [node, ...prevList]);
-    toast({
-      title: "Success",
-      description: "Value Added to Stack",
-      duration: 2000,
-      className: "bg-green-700 text-white border-2 border-green-700",
-    });
+    customToast("Value Added To Stack", "success");
     setValue("");
     return;
   }
@@ -38,21 +28,11 @@ export default function pushStack({ value, setList, setValue }: props) {
       id: uuidv4(),
     };
     setList((prevList) => [node, ...prevList]);
-    toast({
-      title: "Success",
-      description: "Value Added to Stack",
-      duration: 2000,
-      className: "bg-green-700 text-white border-2 border-green-700",
-    });
+    customToast("Operator Added To Stack", "success");
     setValue("");
     return;
   } else {
-    toast({
-      title: "Error",
-      description: "Please Enter a Number Or an Operator",
-      duration: 2000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("Please Enter a Number Or an Operator", "error");
   }
   setValue("");
   return;

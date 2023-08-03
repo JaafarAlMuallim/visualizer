@@ -1,5 +1,7 @@
 import LinkedListProps from "@/models/linkedListProps";
 import customToast from "./toasts";
+import { v4 as uuidv4 } from "uuid";
+import StructureNode from "@/models/Node";
 
 const addAfter = ({
   value,
@@ -21,23 +23,33 @@ const addAfter = ({
     setBeforeAfter("");
     return;
   }
-  if (list.includes(Number(value))) {
+
+  if (
+    list.some((item) => {
+      item.value === value;
+    })
+  ) {
     customToast(`Element With Value ${value} Already Exists`, "error");
     setValue("");
     setBeforeAfter("");
     return;
   }
-  const index = list.indexOf(Number(beforeAfter));
+  // find index of beforeAfter
+  const index = list.findIndex((item) => item.value === beforeAfter);
   if (index === -1) {
     customToast(`Element With Value ${beforeAfter} Not Found`, "error");
     setValue("");
     setBeforeAfter("");
     return;
   }
+  const node: StructureNode = {
+    value: Number(value),
+    id: uuidv4(),
+  };
 
   setList((prevList) => [
     ...prevList.slice(0, index + 1),
-    Number(value),
+    node,
     ...prevList.slice(index + 1),
   ]);
   customToast(

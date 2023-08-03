@@ -1,5 +1,4 @@
 import LinkedListProps from "@/models/linkedListProps";
-import { toast } from "@/components/ui/use-toast";
 import customToast from "./toasts";
 
 const deleteHead = ({ list, setValue, setList }: LinkedListProps) => {

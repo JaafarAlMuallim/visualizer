@@ -1,6 +1,7 @@
-import { toast } from "@/components/ui/use-toast";
 import LinkedListProps from "@/models/linkedListProps";
 import customToast from "./toasts";
+import StructureNode from "@/models/Node";
+import { v4 as uuidv4 } from "uuid";
 
 const addTail = ({ value, setValue, setList, list }: LinkedListProps) => {
   if (value === "") {
@@ -8,12 +9,16 @@ const addTail = ({ value, setValue, setList, list }: LinkedListProps) => {
     setValue("");
     return;
   }
-  if (list.includes(Number(value))) {
+  if (list.some((item) => item.value === Number(value))) {
     customToast(`Element With Value ${value} Already Exists`, "error");
     setValue("");
     return;
   }
-  setList((prevList) => [...prevList, Number(value)]);
+  const node: StructureNode = {
+    value: Number(value),
+    id: uuidv4(),
+  };
+  setList((prevList) => [...prevList, node]);
   customToast(`Added ${value} To Tail`, "success");
   setValue("");
   return;

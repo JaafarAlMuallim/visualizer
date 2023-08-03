@@ -1,4 +1,3 @@
-import { toast } from "@/components/ui/use-toast";
 import LinkedListProps from "@/models/linkedListProps";
 import customToast from "./toasts";
 
@@ -19,7 +18,7 @@ const deleteElement = ({
     setValue("");
     return;
   }
-  const index = list.indexOf(Number(value));
+  const index = list.findIndex((item) => item.value === Number(value));
   if (index === -1) {
     customToast(`Element With Value ${value} Not Found`, "error");
     setValue("");

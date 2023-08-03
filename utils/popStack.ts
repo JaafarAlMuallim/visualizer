@@ -1,5 +1,5 @@
-import { toast } from "@/components/ui/use-toast";
 import StructureNode from "@/models/Node";
+import customToast from "./toasts";
 
 type props = {
   list: StructureNode[];
@@ -8,20 +8,10 @@ type props = {
 
 export default function popStack({ list, setList }: props) {
   if (list.length === 0) {
-    toast({
-      title: "Error",
-      description: "Stack is empty",
-      duration: 2000,
-      className: "bg-red-700 text-white border-2 border-red-700",
-    });
+    customToast("Stack is Empty", "error");
   } else {
     setList((prevList) => prevList.slice(1));
-    toast({
-      title: "Success",
-      description: "Value removed from stack",
-      duration: 2000,
-      className: "bg-green-700 text-white border-2 border-green-700",
-    });
+    customToast("Value Removed From Stack", "success");
   }
   return;
 }
