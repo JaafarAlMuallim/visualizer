@@ -43,7 +43,6 @@ const Provider = ({ children }: { children: ReactNode }) => {
       case "bubble":
         const { newArr: bubbleNums, animationArr: bubbleAnims } =
           bubbleSortAnimations(items);
-        console.log(bubbleNums, bubbleAnims);
         animateDivs({
           newArr: bubbleNums,
           arr: bubbleAnims,

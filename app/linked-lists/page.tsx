@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import LinkedList from "../components/LinkedList";
+import LinkedList from "./LinkedList";
 import CustomDropdown from "../components/CustomDropdown";
 import CustomPopover from "../components/CustomPopover";
 import CustomSwitch from "../components/CustomSwitch";
@@ -17,10 +17,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import StructureNode from "@/models/Node";
 
 // TODO add framer motion
 export default function LinkedListPage() {
-  const [list, setList] = useState<number[]>([]);
+  const [list, setList] = useState<StructureNode[]>([]);
   const [type, setType] = useState<"singly" | "doubly">("singly");
   const [currentState, setCurrentState] = useState("Add To Head");
   const [value, setValue] = useState("");
@@ -120,7 +121,7 @@ export default function LinkedListPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 overflow-hidden">
       <div className="px-4 py-2 flex items-center">
         <div className="flex md:flex-row items-center justify-center mx-20">
           {!deleteions.includes(currentState) ? (

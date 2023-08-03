@@ -1,19 +1,19 @@
 "use client";
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
-import StackQueue from "../components/StackQueue";
-import { toast } from "@/components/ui/use-toast";
 import pushStack from "@/utils/pushStack";
 import enqueue from "@/utils/enqQ";
 import popStack from "@/utils/popStack";
 import dequeue from "@/utils/deqQ";
 import customToast from "@/utils/toasts";
+import StackQueue from "./StackQueue";
+import StructureNode from "@/models/Node";
 
-// TODO add framer motion
 export default function StackAndQueuePage() {
-  const [list, setList] = useState<(number | string)[]>([]);
+  const [list, setList] = useState<StructureNode[]>([]);
   const [type, setType] = useState<"stack" | "queue">("stack");
   const [value, setValue] = useState("");
+  const [evaluated, setEvaluated] = useState<[boolean, number]>([false, 0]);
 
   const clearList = () => {
     setList((prevList) => []);
@@ -39,6 +39,7 @@ export default function StackAndQueuePage() {
     switch (type) {
       case "stack":
         popStack({ list, setList });
+        setEvaluated(isValidPostfixStack(list));
         return;
       case "queue":
         dequeue({ list, setList });
@@ -49,13 +50,13 @@ export default function StackAndQueuePage() {
     switch (type) {
       case "stack":
         pushStack({ value, setList, setValue });
+        setEvaluated(isValidPostfixStack(list));
         return;
       case "queue":
         enqueue({ value, setList, setValue });
         break;
     }
   };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <div className="px-4 py-2 flex items-center">
@@ -86,6 +87,16 @@ export default function StackAndQueuePage() {
           >
             Delete
           </button>
+          {type === "stack" && (
+            <button
+              disabled={true}
+              type="button"
+              className="bg-transparent mx-5 text-white py-2 px-4 rounded-lg"
+              onClick={deletionHandler}
+            >
+              Postfix value = {evaluated[1]}
+            </button>
+          )}
         </div>
         <>
           <label
@@ -108,9 +119,56 @@ export default function StackAndQueuePage() {
 
       <div className="flex flex-col items-center justify-center flex-1 px-20 text-center">
         <div className="flex flex-row items-center justify-center">
-          <StackQueue type={type} list={list} />
+          <StackQueue
+            type={type}
+            list={type === "stack" ? list.reverse() : list}
+          />
         </div>
       </div>
     </div>
   );
 }
+
+function isValidPostfixStack(expr: StructureNode[]): [boolean, number] {
+  const operators = new Set(["+", "-", "/", "*"]);
+  const stack: number[] = [];
+  if (expr.length === 0) {
+    console.log("Empty expression");
+    return [false, 0];
+  }
+  for (const item of expr.reverse()) {
+    if (typeof item.value === "number") {
+      stack.push(item.value);
+    } else if (typeof item.value === "string" && operators.has(item.value)) {
+      if (stack.length < 2) {
+        return [false, 0]; // Invalid expression
+      }
+
+      const num1 = stack.pop();
+      const num2 = stack.pop();
+      switch (item.value) {
+        case "+":
+          stack.push(num1! + num2!);
+          break;
+        case "-":
+          stack.push(num1! - num2!);
+          break;
+        case "*":
+          stack.push(num1! * num2!);
+          break;
+        case "/":
+          stack.push(num1! / num2!);
+          break;
+        default:
+          return [false, 0]; // Invalid operator
+      }
+    } else {
+      return [false, 0]; // Invalid element
+    }
+  }
+
+  return [true, stack[0]]; // True if the stack has exactly one element (the result of the expression)
+}
+
+// Example usage:
+// const expression = [2, 3, 4, '*', '+', 5, '-']; // This is a valid postfix expression: (2 + (3 * 4)) - 5 true
