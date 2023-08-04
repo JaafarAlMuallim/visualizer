@@ -11,18 +11,30 @@ import { twMerge } from "tailwind-merge";
 export default function Navbar() {
   const pathname = usePathname();
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-blue-700 via-purple-800 to-pink-900 p-6">
+    // <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-blue-700 via-purple-800 to-pink-900 p-6">
+    <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 p-6">
+      {/* <nav className="flex items-center justify-between flex-wrap  bg-gradient-to-r b- from-zinc-700 via-zinc-800 to-zinc-900 p-6"> */}
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <Link href="/" className="font-semibold text-xl tracking-tight">
+        <Link href="/" className="font-semibold text-3xl tracking-tight">
           Visualizer
         </Link>
       </div>
       <div className="hidden sm:block sm:ml-6">
         <div className="flex space-x-4">
           <Link
+            href="/"
+            className={twMerge(
+              `text-gray-400 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === "/" ? "text-white" : ""
+              }`
+            )}
+          >
+            Home
+          </Link>
+          <Link
             href="/sorting"
             className={twMerge(
-              `text-gray-400 hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium ${
+              `text-gray-400 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium ${
                 pathname === "/sorting" ? "text-white" : ""
               }`
             )}
@@ -32,7 +44,7 @@ export default function Navbar() {
           <Link
             href="/stacks-queues"
             className={twMerge(
-              `text-gray-400 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+              `text-gray-400 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium ${
                 pathname === "/stacks-queues" ? "text-white" : ""
               }`
             )}
@@ -42,21 +54,13 @@ export default function Navbar() {
           <Link
             href="/linked-lists"
             className={twMerge(
-              `text-gray-400 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+              `text-gray-400 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium ${
                 pathname === "/linked-lists" ? "text-white" : ""
               }`
             )}
           >
             Linked Lists
           </Link>
-          {/* <Link
-            href="/trees"
-            className={`text-slate-300 hover:bg-slate-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
-              selected ? "text-blue-400" : ""
-            }`}
-          >
-            Trees
-          </Link> */}
         </div>
       </div>
       <div className="">
@@ -68,7 +72,7 @@ export default function Navbar() {
             >
               <span className="sr-only">Open user menu</span>
 
-              <span className="text-white underline p-3">Settings</span>
+              <span className="text-white underline p-3">Visualize</span>
             </PopoverTrigger>
             <PopoverContent
               className={`origin-top-right flex flex-col absolute 
@@ -92,12 +96,12 @@ export default function Navbar() {
               >
                 Linked Lists
               </Link>
-              <Link
+              {/* <Link
                 href="/trees"
                 className="text-slate-300 hover:bg-slate-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
                 Trees
-              </Link>
+              </Link> */}
             </PopoverContent>
           </Popover>
         </div>
