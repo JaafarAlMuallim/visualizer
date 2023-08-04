@@ -31,10 +31,14 @@ export default function HomePageContent() {
             linked lists, stacks, queues and sorting algorithms gaining a deeper
             understanding of how they work and how they interact with your data.
             <a
-              className="underline text-white ml-2 text-md font-normal"
+              className="text-white ml-2 text-md font-normal block indent-0"
               href="/sorting"
             >
-              Start With Sorting{" "}
+              <span className="underline">Start With Sorting</span>
+              <Arrow
+                direction={"right"}
+                className="w-7 h-7 inline mx-2 mb-2 no-underline"
+              />
             </a>
             {/* <Arrow direction={"right"} className="w-7 h-7 inline mx-2 mb-2" /> */}
           </p>

@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} w-screen`}>
         <Navbar />
-        <main className="grid grid-rows-[repeat(10,_1fr)   bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 w-screen h-screen overflow-hidden">
+        <main className="m-auto grid grid-rows-[repeat(10,_1fr) bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 h-screen overflow-hidden">
           <Provider>{children}</Provider>
         </main>
         <Toaster />
