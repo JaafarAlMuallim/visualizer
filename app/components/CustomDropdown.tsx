@@ -4,14 +4,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Dispatch, SetStateAction } from "react";
+import StructureNode from "@/models/Node";
 
 export default function CustomDropdown({
   changeState,
   currentState,
+  list,
 }: {
   changeState(state: string): void;
   currentState: string;
+  list: StructureNode[];
 }) {
   return (
     <DropdownMenu>
@@ -19,7 +21,7 @@ export default function CustomDropdown({
         id="trigger"
         className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
       >
-        {currentState} | Change Operation
+        Change Operation
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
@@ -29,13 +31,13 @@ export default function CustomDropdown({
           Add To Head
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={currentState === "Add Before"}
+          disabled={currentState === "Add Before" || list.length === 0}
           onClick={() => changeState("Add Before")}
         >
           Add Before
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={currentState === "Add After"}
+          disabled={currentState === "Add After" || list.length === 0}
           onClick={() => changeState("Add After")}
         >
           Add After
@@ -47,19 +49,19 @@ export default function CustomDropdown({
           Add To Tail
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={currentState === "Delete From Head"}
+          disabled={currentState === "Delete From Head" || list.length === 0}
           onClick={() => changeState("Delete From Head")}
         >
           Delete From Head
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={currentState === "Delete From Tail"}
+          disabled={currentState === "Delete From Tail" || list.length === 0}
           onClick={() => changeState("Delete From Tail")}
         >
           Delete From Tail
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={currentState === "Delete Element"}
+          disabled={currentState === "Delete Element" || list.length === 0}
           onClick={() => changeState("Delete Element")}
         >
           Delete Element

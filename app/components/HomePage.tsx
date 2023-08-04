@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Arrow from "./Arrow";
 export default function HomePageContent() {
   return (
     <div className="my-20">
@@ -29,6 +30,13 @@ export default function HomePageContent() {
             just a click. This website allows you to visualize operations on
             linked lists, stacks, queues and sorting algorithms gaining a deeper
             understanding of how they work and how they interact with your data.
+            <a
+              className="underline text-white ml-2 text-md font-normal"
+              href="/sorting"
+            >
+              Start With Sorting{" "}
+            </a>
+            {/* <Arrow direction={"right"} className="w-7 h-7 inline mx-2 mb-2" /> */}
           </p>
         </motion.div>
         <motion.img

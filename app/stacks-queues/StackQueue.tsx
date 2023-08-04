@@ -18,7 +18,7 @@ export default function StackQueue({
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.175 }}
           >
             <div key={index} className="flex items-center justify-center">
               <Box key={item.id} number={item.value} />

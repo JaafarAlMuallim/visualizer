@@ -20,7 +20,7 @@ export default function LinkedList({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.175 }}
               >
                 <div className="flex items-center justify-center">
                   <Box number={item.value} />
@@ -36,7 +36,7 @@ export default function LinkedList({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.175 }}
               >
                 <div className="flex items-center justify-center">
                   <Box number={item.value} />
@@ -54,7 +54,7 @@ export default function LinkedList({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.175 }}
           >
             <div className="flex items-center justify-center">
               <Arrow key={"null val"} direction="right" />
@@ -66,7 +66,7 @@ export default function LinkedList({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.175 }}
           >
             <div className="flex items-center justify-center">
               (
