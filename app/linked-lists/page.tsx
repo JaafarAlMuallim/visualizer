@@ -161,6 +161,7 @@ export default function LinkedListPage() {
                 type="button"
                 className="bg-blue-500 mx-5 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
                 onClick={handler}
+                disabled={value === ""}
               >
                 {currentState.includes("Delete") ? "Delete" : "Add"}
               </button>
