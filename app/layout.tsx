@@ -21,9 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} w-screen`}>
+      <body className={`${inter.className} w-screen overflow-x-hidden`}>
         <Navbar />
-        <main className="m-auto grid grid-rows-[repeat(10,_1fr) bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 h-screen overflow-hidden">
+        <main className="grid grid-rows-[repeat(10,_1fr) bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 h-screen">
           <Provider>{children}</Provider>
         </main>
         <Toaster />
